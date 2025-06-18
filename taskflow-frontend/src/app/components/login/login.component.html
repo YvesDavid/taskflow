@@ -1,0 +1,23 @@
+<div class="login-page">
+  <h2>Connexion</h2>
+  <form [formGroup]="form" (ngSubmit)="login()">
+    <div>
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" />
+      <div *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+        Email invalide
+      </div>
+    </div>
+
+    <div>
+      <label for="password">Mot de passe</label>
+      <input id="password" formControlName="password" type="password" />
+      <div *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+        Mot de passe requis
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">Se connecter</button>
+    <p *ngIf="error" class="error">{{ error }}</p>
+  </form>
+</div>

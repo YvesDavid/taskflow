@@ -1,0 +1,52 @@
+<div class="task-form">
+  <h2>{{ isEdit ? 'Modifier' : 'Créer' }} une tâche</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>
+      Titre
+      <input formControlName="title" />
+    </label>
+    <!-- La sécurité dans l'envoi du titre -->
+
+        <div *ngIf="form.get('title')?.touched">
+            <small *ngIf="form.get('title')?.hasError('required')">
+                Le titre est requis.
+            </small>
+            <small *ngIf="form.get('title')?.hasError('minlength')">
+                Le titre doit contenir au moins 3 caractères.
+            </small>
+            <small *ngIf="form.get('title')?.hasError('maxlength')">
+                Le titre ne peut pas dépasser 255 caractères.
+            </small>
+        </div>
+
+    <label>
+      Description
+      <textarea formControlName="description"></textarea>
+    </label>
+<!-- La sécurité dans l'envoi de la description -->
+        <div *ngIf="form.get('description')?.touched">
+          <small *ngIf="form.get('description')?.hasError('required')">
+            La description est requis.
+          </small>
+          <small *ngIf="form.get('description')?.hasError('minlength')">
+            La description doit contenir au moins 3 caractères.
+          </small>
+          <small *ngIf="form.get('description')?.hasError('maxlength')">
+            La description ne peut pas dépasser 255 caractères.
+          </small>
+        </div>
+
+
+    <label>
+      Statut
+      <select formControlName="status">
+        <option value="todo">À faire</option>
+        <option value="doing">En cours</option>
+        <option value="done">Terminée</option>
+      </select>
+    </label>
+    <button type="submit" [disabled]="form.invalid">
+      {{ isEdit ? 'Mettre à jour' : 'Créer' }}
+    </button>
+  </form>
+</div>

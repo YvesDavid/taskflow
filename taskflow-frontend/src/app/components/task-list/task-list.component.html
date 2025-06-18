@@ -1,0 +1,51 @@
+<div class="task-list">
+  <h2>Mes tâches</h2>
+  <!-- on appelle la méthode newTask() -->
+  <button (click)="newTask()">Nouvelle tâche</button>
+  <ul>
+
+
+
+<div class="controls">
+  <!-- Recherche -->
+  <input
+    type="text"
+    placeholder="Recherche..."
+    [(ngModel)]="filter.q"
+    (keyup.enter)="load(1)"
+  />
+
+  <!-- Filtre statut -->
+  <select [(ngModel)]="filter.status" (change)="load(1)">
+    <option value="">Tous</option>
+    <option value="todo">À faire</option>
+    <option value="doing">En cours</option>
+    <option value="done">Terminées</option>
+  </select>
+
+  <!-- Tri -->
+  <select [(ngModel)]="filter.sort" (change)="load()">
+    <option value="createdAt">Date création</option>
+    <option value="title">Titre</option>
+    <option value="status">Statut</option>
+  </select>
+  <button (click)="filter.direction = filter.direction==='ASC'?'DESC':'ASC'; load();">
+    {{ filter.direction === 'ASC' ? '↑' : '↓' }}
+  </button>
+</div>
+
+<ul>
+  <li *ngFor="let t of tasks">
+    {{ t.title }} — {{ t.status }}
+    <button (click)="read(t.id!)">voir</button>
+    <button (click)="edit(t.id!)">✏️</button>
+    <button (click)="delete(t.id!)">🗑️</button>
+  </li>
+</ul>
+
+<!-- Pagination -->
+<div class="pagination">
+  <button (click)="load(meta.page-1)" [disabled]="meta.page<=1">Préc.</button>
+  Page {{ meta.page }} / {{ meta.pages }}
+  <button (click)="load(meta.page+1)" [disabled]="meta.page>=meta.pages">Suiv.</button>
+</div>
